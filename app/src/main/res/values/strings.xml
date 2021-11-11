@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Candy Corner</string>
+    <string-array name="option">
+        <item name="Receiving Stock">Receiving Stock</item>
+        <item name="Ordering Stock">Ordering Stock</item>
+    </string-array>
 </resources>
