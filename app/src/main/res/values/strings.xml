@@ -4,4 +4,12 @@
         <item name="Receiving Stock">Receiving Stock</item>
         <item name="Ordering Stock">Ordering Stock</item>
     </string-array>
+
+    <string-array name="candies">
+        <item>M &amp; M's</item>
+        <item>Haribo Gummy Bears</item>
+        <item>Kit Kat</item>
+        <item>Jolly Ranchers</item>
+
+    </string-array>
 </resources>
