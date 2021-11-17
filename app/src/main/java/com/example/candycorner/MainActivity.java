@@ -2,6 +2,7 @@ package com.example.candycorner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position == 0){
-                    Toast.makeText(getApplicationContext(), "Receiving Stock", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ReceivingStock.class);
+                    startActivity(intent);
                 }
 
                 if (position == 1){
-                    Toast.makeText(getApplicationContext(), "Ordering Stock", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, OrderingStock.class);
+                    startActivity(intent);
                 }
             }
         });
