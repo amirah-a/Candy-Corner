@@ -22,7 +22,7 @@
 
         <TextView
             android:id="@+id/handLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="101dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/StockOnHand" />
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/pricelabel"
-            android:layout_width="wrap_content"
+            android:layout_width="102dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/Price" />
