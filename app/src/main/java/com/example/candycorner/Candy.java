@@ -1,6 +1,6 @@
 package com.example.candycorner;
 
-public class Product {
+public class Candy {
     private String name;
     private int stockOnHand;
     private int stockInTransit;
@@ -8,11 +8,11 @@ public class Product {
     private int reorderQuantity;
     private int reorderAmount;
 
-    public Product(){
+    public Candy(){
         // empty constructor
     }
 
-    public Product(String name, int stockOnHand, int stockInTransit, double price, int reorderQuantity, int reorderAmount) {
+    public Candy(String name, int stockOnHand, int stockInTransit, double price, int reorderQuantity, int reorderAmount) {
         this.name = name;
         this.stockOnHand = stockOnHand;
         this.stockInTransit = stockInTransit;

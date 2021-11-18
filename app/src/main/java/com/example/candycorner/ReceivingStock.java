@@ -1,11 +1,13 @@
 package com.example.candycorner;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,6 +35,7 @@ public class ReceivingStock extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
@@ -42,30 +45,32 @@ public class ReceivingStock extends AppCompatActivity {
                 }
                 if (position == 1) {
                     try{
-//                        SQLiteOpenHelper candyCornerDBHelper = new CandyCornerDatabaseHelper(getApplicationContext());
-//                        db = candyCornerDBHelper.getReadableDatabase();
-//
-////                        cursor = db.query("Product",
-////                                new String[]{"StockOnHand", "StockInTransit", "Price", "ReorderQuantity", "ReorderAmount"},
-////                                "Name = ?", new String[]{"MilkyWay"},null, null, null);
-//
+                        SQLiteOpenHelper candyCornerDatabaseHelper = new CandyCornerDatabaseHelper(adapter.getContext());
+                        db = candyCornerDatabaseHelper.getWritableDatabase();
+
+                        cursor = db.query("Product",
+                                new String[]{"Name", "StockOnHand"},
+                                "Name = ?", new String[]{"Milky Way"},null, null, null);
+
                         TextView tv = (TextView) findViewById(R.id.handValue);
-                        tv.setText("MilkyWay");
-//                        cursor = db.query("Product",
-//                                new String[]{"StockOnHand", "StockInTransit", "Price", "ReorderQuantity", "ReorderAmount"},
-//                                "Name = ?", new String[]{"MilkyWay"},null, null, null);
-//
-//                        while (cursor.moveToNext()) {
-//                            tv.setText(String.valueOf(cursor.getInt(1)));
-//                        }
-//                        cursor.close();
-//                        db.close();
+                        int n = cursor.getCount();
+
+                        if (cursor != null && cursor.moveToFirst()){
+                            tv.setText(String.valueOf(cursor.getColumnIndex("Name")));
+                        }
+                        else
+                            tv.setText("Empty");
                     }
-                    catch (SQLiteException e) {
-                        String s = e.getMessage();
-                        Toast.makeText(adapterView.getContext(), "Database unavailable: " + s,
-                                Toast.LENGTH_LONG).show();
+                    finally {
+                        if (cursor != null) {
+                            cursor.close();
+                        }
+                        db.close();
                     }
+                    //Toast.makeText(adapterView.getContext(),n, Toast.LENGTH_SHORT).show();
+
+//                    db.close();
+//                    cursor.close();
 
                 }
 

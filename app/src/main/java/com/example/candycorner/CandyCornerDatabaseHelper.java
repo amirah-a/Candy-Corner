@@ -6,7 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 public class CandyCornerDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DB_NAME = "CandyCorner";
+    private static final String DB_NAME = "CandyCornerDB";
     private static final int DB_VERSION = 1;
     private static final String COL_NAME = "Name";
     private static final String COL_STOCKONHAND = "StockOnHand";
@@ -20,7 +20,8 @@ public class CandyCornerDatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE Product(" +
+
+        db.execSQL("CREATE TABLE Product (" +
                    "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     COL_NAME + " TEXT," +
                     COL_STOCKONHAND +" INTEGER," +
@@ -35,19 +36,21 @@ public class CandyCornerDatabaseHelper extends SQLiteOpenHelper {
         insertCandy(db, "Jolly Ranchers", 15, 8, 2.99, 5, 12);
 
 
-
     }
 
     private static  void insertCandy(SQLiteDatabase db, String name, int hand, int transit,
                                      double price, int reorderQuan, int reorderAmt){
         ContentValues candyValues = new ContentValues();
+
         candyValues.put(COL_NAME, name);
         candyValues.put(COL_STOCKONHAND, hand);
         candyValues.put(COL_STOCKINTRANSIT, transit);
         candyValues.put(COL_PRICE, price);
         candyValues.put(COL_REORDERQUANTITY, reorderQuan);
         candyValues.put(COL_REORDERAMOUNT, reorderAmt);
-        db.insert(DB_NAME, null, candyValues);
+
+        db.insert("Product", null, candyValues);
+
 
     }
 
