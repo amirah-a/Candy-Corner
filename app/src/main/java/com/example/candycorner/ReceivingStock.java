@@ -7,11 +7,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,12 +32,12 @@ public class ReceivingStock extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         Spinner spinner = (Spinner) findViewById(R.id.candySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.candies, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        //  Spinner listener
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -80,6 +82,19 @@ public class ReceivingStock extends AppCompatActivity {
 
 
         });
+
+        // Button Listener
+        Button button = (Button) findViewById(R.id.makeOrder);
+        TextView label = (TextView) findViewById(R.id.orderLabel);
+        label.setTypeface(null, Typeface.BOLD);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //int val = String.valueOf(button.getText().toString());
+
+            }
+        });
     }
 
     public void itemQuery(Context context, String item){
@@ -111,6 +126,7 @@ public class ReceivingStock extends AppCompatActivity {
                 cursor.close();
             }
             db.close();
-        }    }
+        }
+    }
 }
 
