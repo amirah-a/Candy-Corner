@@ -154,7 +154,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_margin="16dp"
-                android:text="@string/makeOrder" />
+                android:text="@string/makeOrder"
+                android:clickable="true"
+                android:focusable="true" />
         </LinearLayout>
     </ScrollView>
 

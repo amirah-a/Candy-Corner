@@ -1,19 +1,19 @@
 package com.example.candycorner;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,19 +58,19 @@ public class ReceivingStock extends AppCompatActivity {
                 }
 
                 if (position == 1) {
-                    itemQuery(adapterView.getContext(), "MilkyWay");
+                    spinnerQuery(adapterView.getContext(), "MilkyWay");
                 }
 
                 if (position == 2){
-                    itemQuery(adapterView.getContext(), "Gummy Bears");
+                    spinnerQuery(adapterView.getContext(), "Gummy Bears");
                 }
 
                 if (position == 3){
-                    itemQuery(adapterView.getContext(), "Kit Kat");
+                    spinnerQuery(adapterView.getContext(), "Kit Kat");
                 }
 
                 if (position == 4){
-                    itemQuery(adapterView.getContext(), "Jolly Ranchers");
+                    spinnerQuery(adapterView.getContext(), "Jolly Ranchers");
                 }
 
             }
@@ -83,21 +83,11 @@ public class ReceivingStock extends AppCompatActivity {
 
         });
 
-        // Button Listener
-        Button button = (Button) findViewById(R.id.makeOrder);
-        TextView label = (TextView) findViewById(R.id.orderLabel);
-        label.setTypeface(null, Typeface.BOLD);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //int val = String.valueOf(button.getText().toString());
-
-            }
-        });
     }
 
-    public void itemQuery(Context context, String item){
+    @SuppressLint("Range")
+    public void spinnerQuery(Context context, String item){
         try{
             SQLiteOpenHelper candyCornerDatabaseHelper = new CandyCornerDatabaseHelper(context);
             db = candyCornerDatabaseHelper.getWritableDatabase();
@@ -127,6 +117,43 @@ public class ReceivingStock extends AppCompatActivity {
             }
             db.close();
         }
+    }
+
+    public Cursor getItemCursor(Context context, String item){
+        try{
+            SQLiteOpenHelper candyCornerDatabaseHelper = new CandyCornerDatabaseHelper(context);
+            db = candyCornerDatabaseHelper.getWritableDatabase();
+            cursor = db.query("Product",
+                    new String[] {"Name", "StockOnHand", "StockInTransit", "Price", "ReorderQuantity", "ReorderAmount"},
+                    "Name = ?",
+                    new String[] {item},
+                    null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()){
+                return cursor;
+            }
+            else
+                return null;
+        }
+        finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+    }
+
+    @SuppressLint("Range")
+    public void updateCandy(View view, String item, int val){
+        Cursor cursor = getItemCursor(view.getContext(), item);
+        ContentValues updatedContent = new ContentValues();
+        updatedContent.put("StockOnHand", cursor.getInt(cursor.getColumnIndex("StockOnHand"))+val);
+        updatedContent.put("StockInTransit",cursor.getInt(cursor.getColumnIndex("StockInTransit"))-val);
+        updatedContent.put("Price", cursor.getInt(cursor.getColumnIndex("Price")));
+        updatedContent.put("ReorderQuantity", cursor.getInt(cursor.getColumnIndex("ReorderQuantity")));
+        updatedContent.put("ReorderAmount", cursor.getInt(cursor.getColumnIndex("ReorderAmount")));
+
+        db.update("Product",updatedContent, "Name =?", new String[]{item});
     }
 }
 

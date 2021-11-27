@@ -6,7 +6,7 @@
     <string name="ReorderQuanity">ReorderQuantity</string>
     <string name="ReorderAmount">Reorder Amount</string>
     <string name="makeOrder">Make Order</string>
-    <string name="orderLabel">Order Label</string>
+    <string name="orderLabel">Enter quantity: </string>
     <string-array name="option">
         <item name="Receiving Stock">Receiving Stock</item>
         <item name="Ordering Stock">Ordering Stock</item>
